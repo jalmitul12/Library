@@ -1,0 +1,287 @@
+/**
+ * Library Book Lending Management System
+ * Custom Stylesheet supplementing Bootstrap 5
+ *
+ * Reference links:
+ * CSS basics: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics
+ * CSS reference: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
+ * CSS custom properties: https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties
+ * Bootstrap 5.3: https://getbootstrap.com/docs/5.3/
+ */
+
+/* =========================================================
+   CSS VARIABLES
+   Reference:
+   https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties
+   ========================================================= */
+
+:root {
+  --primary-color: #0d6efd;
+  --success-color: #198754;
+  --warning-color: #ffc107;
+  --card-border-radius: 12px;
+  --transition-speed: 0.2s;
+}
+
+/* =========================================================
+   BODY AND FONT
+   Reference:
+   https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
+   https://developer.mozilla.org/en-US/docs/Web/CSS/color
+   ========================================================= */
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #212529;
+}
+
+/* =========================================================
+   STAT CARDS
+   References:
+   CSS transitions: https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+   CSS transform: https://developer.mozilla.org/en-US/docs/Web/CSS/transform
+   CSS hover: https://developer.mozilla.org/en-US/docs/Web/CSS/:hover
+   Bootstrap cards: https://getbootstrap.com/docs/5.3/components/card/
+   ========================================================= */
+
+/* Stat Cards */
+.stat-card {
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+}
+
+/* =========================================================
+   STAT ICON WRAPPER
+   References:
+   Flexbox: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout
+   Border radius: https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius
+   ========================================================= */
+
+.stat-icon-wrapper {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================================================
+   DRAG AND DROP ZONES
+   References:
+   CSS cursor: https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
+   CSS user-select: https://developer.mozilla.org/en-US/docs/Web/CSS/user-select
+   CSS transitions: https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+   HTML Drag and Drop API: https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API
+   ========================================================= */
+
+/* Drop Zones */
+.drop-zone {
+  border: 2px dashed #ced4da;
+  background-color: #ffffff;
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+  min-height: 140px;
+}
+
+/* Circular icon inside each drop zone */
+.drop-zone-icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+/* Available drop zone */
+.drop-zone-available {
+  border-color: rgba(25, 135, 84, 0.4);
+}
+
+.drop-zone-available:hover {
+  background-color: rgba(25, 135, 84, 0.04);
+  border-color: var(--success-color);
+}
+
+/* Issued drop zone */
+.drop-zone-issued {
+  border-color: rgba(255, 193, 7, 0.6);
+}
+
+.drop-zone-issued:hover {
+  background-color: rgba(255, 193, 7, 0.06);
+  border-color: #d39e00;
+}
+
+/* =========================================================
+   ACTIVE DRAG-OVER STATE
+   References:
+   CSS class selectors: https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors
+   CSS transform: https://developer.mozilla.org/en-US/docs/Web/CSS/transform
+   CSS box shadow: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
+   ========================================================= */
+
+/* Active Drag Over State */
+.drop-zone.drag-over {
+  transform: scale(1.02);
+  border-style: solid;
+  border-width: 3px;
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12);
+}
+
+.drop-zone-available.drag-over {
+  border-color: #198754 !important;
+  background-color: rgba(25, 135, 84, 0.12) !important;
+}
+
+.drop-zone-issued.drag-over {
+  border-color: #ff9800 !important;
+  background-color: rgba(255, 193, 7, 0.18) !important;
+}
+
+/* Animate the icon when a book is dragged over a drop zone */
+.drop-zone.drag-over .drop-zone-icon-circle {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+/* =========================================================
+   BOOK ITEM CARDS
+   References:
+   CSS positioning: https://developer.mozilla.org/en-US/docs/Web/CSS/position
+   CSS cursor: https://developer.mozilla.org/en-US/docs/Web/CSS/cursor
+   CSS object-fit: https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit
+   Bootstrap cards: https://getbootstrap.com/docs/5.3/components/card/
+   ========================================================= */
+
+/* Book Item Cards */
+.book-card {
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, opacity var(--transition-speed) ease;
+  border-radius: 12px;
+  cursor: grab;
+  position: relative;
+  background-color: #ffffff;
+}
+
+/* Book cover image container */
+.book-cover-container {
+  height: 220px;
+  background-color: #f1f3f5;
+}
+
+/* Fit the book cover image inside its container */
+.book-cover-img {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Zoom the cover image on hover */
+.book-card:hover .book-cover-img {
+  transform: scale(1.04);
+}
+
+/* Lift the book card on hover */
+.book-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Change cursor while interacting with a card */
+.book-card:active {
+  cursor: grabbing;
+}
+
+/* Visual feedback while dragging a book */
+.book-card.is-dragging {
+  opacity: 0.35;
+  transform: scale(0.97);
+  border: 2px dashed #0d6efd !important;
+}
+
+/* Drag handle */
+.drag-handle {
+  cursor: grab;
+  color: #adb5bd;
+  transition: color 0.15s ease;
+}
+
+.book-card:hover .drag-handle {
+  color: #0d6efd;
+}
+
+/* =========================================================
+   CATEGORY BADGES
+   References:
+   Bootstrap badges: https://getbootstrap.com/docs/5.3/components/badge/
+   CSS font weight: https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight
+   CSS letter spacing: https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing
+   ========================================================= */
+
+/* Category Badges */
+.badge-category {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* =========================================================
+   HEALTH BADGE INDICATOR
+   References:
+   CSS font size: https://developer.mozilla.org/en-US/docs/Web/CSS/font-size
+   CSS letter spacing: https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing
+   ========================================================= */
+
+/* Health Badge Indicator */
+.health-badge {
+  font-size: 0.82rem;
+  letter-spacing: 0.2px;
+}
+
+/* =========================================================
+   PAGINATION LINKS
+   Reference:
+   Bootstrap pagination: https://getbootstrap.com/docs/5.3/components/pagination/
+   CSS pseudo-classes: https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes
+   ========================================================= */
+
+/* Pagination Links */
+.pagination .page-link {
+  color: #495057;
+  border-color: #dee2e6;
+  font-weight: 500;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.pagination .page-link:hover {
+  background-color: #e9ecef;
+}
+
+/* =========================================================
+   ANIMATION UTILITIES
+   References:
+   CSS animations: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations
+   @keyframes: https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes
+   Animation property: https://developer.mozilla.org/en-US/docs/Web/CSS/animation
+   ========================================================= */
+
+/* Define a subtle pulsing animation */
+@keyframes pulseSubtle {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Apply the pulsing animation to an element */
+.animate-pulse {
+  animation: pulseSubtle 1.2s infinite ease-in-out;
+}

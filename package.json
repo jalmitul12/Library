@@ -1,0 +1,28 @@
+{
+  "name": "library-book-lending-management-system",
+  "version": "1.0.0",
+  "description": "College Practical Exam - Library Book Lending Management System built with native Node.js HTTP, MySQL2, and Vanilla JavaScript / Bootstrap 5",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test:db": "node db.js"
+  },
+  "keywords": [
+    "library",
+    "book-lending",
+    "nodejs-http",
+    "mysql2",
+    "bootstrap5",
+    "drag-and-drop",
+    "vanilla-js"
+  ],
+  "author": "College Practical Exam Candidate",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^3.11.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

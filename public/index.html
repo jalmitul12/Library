@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- HTML document structure reference:
+       https://developer.mozilla.org/en-US/docs/Web/HTML
+  -->
+  <meta charset="UTF-8">
+
+  <!-- Responsive design / viewport reference:
+       https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Library Book Lending Management System</title>
+
+  <!-- Bootstrap 5 CSS: grid, cards, buttons, forms, spacing, colors
+       https://getbootstrap.com/docs/5.3/getting-started/introduction/
+       https://getbootstrap.com/docs/5.3/layout/grid/
+       https://getbootstrap.com/docs/5.3/utilities/api/
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <!-- Bootstrap Icons reference:
+       https://icons.getbootstrap.com/
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Custom CSS reference:
+       https://developer.mozilla.org/en-US/docs/Web/CSS
+  -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<!-- Bootstrap flexbox and background utilities:
+     https://getbootstrap.com/docs/5.3/utilities/flex/
+     https://getbootstrap.com/docs/5.3/utilities/background/
+-->
+<body class="bg-light d-flex flex-column min-vh-100">
+
+  <!-- ======================================================== -->
+  <!-- HEADER & NAVBAR                                          -->
+  <!-- ======================================================== -->
+  <!-- Semantic header element:
+       https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header
+       Bootstrap Navbar:
+       https://getbootstrap.com/docs/5.3/components/navbar/
+  -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3">
+      <div class="container-fluid px-lg-4">
+
+        <!-- Brand link and Bootstrap flex utilities:
+             https://getbootstrap.com/docs/5.3/components/navbar/#brand
+             https://getbootstrap.com/docs/5.3/utilities/flex/
+        -->
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+          <i class="bi bi-book-half fs-3"></i>
+          <div>
+            <span class="fw-bold tracking-tight fs-4">LendTrack Portal</span>
+          </div>
+        </a>
+
+        <!-- Quick Actions -->
+        <!-- Bootstrap Buttons:
+             https://getbootstrap.com/docs/5.3/components/buttons/
+        -->
+        <div class="d-flex align-items-center ms-auto">
+          <button type="button" class="btn btn-warning text-dark fw-semibold d-flex align-items-center gap-2 shadow-sm" id="btnOpenAddModal">
+            <i class="bi bi-plus-circle-fill"></i>
+            <span>Add Book</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- MAIN CONTENT                                             -->
+  <!-- ======================================================== -->
+  <!-- Semantic main element:
+       https://developer.mozilla.org/en-US/docs/Web/HTML/Element/main
+       Bootstrap containers and spacing:
+       https://getbootstrap.com/docs/5.3/layout/containers/
+       https://getbootstrap.com/docs/5.3/utilities/spacing/
+  -->
+  <main class="container-fluid px-lg-4 py-4 flex-grow-1">
+
+    <!-- Section 1: Dashboard Counters -->
+    <!-- Semantic section and accessibility labels:
+         https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section
+         https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby
+    -->
+    <section class="mb-4" aria-labelledby="dashboardHeading">
+      <h2 id="dashboardHeading" class="visually-hidden">Dashboard Statistics</h2>
+
+      <!-- Bootstrap responsive grid:
+           https://getbootstrap.com/docs/5.3/layout/grid/
+      -->
+      <div class="row g-3">
+
+        <!-- Total Books -->
+        <div class="col-12 col-md-4">
+          <!-- Bootstrap Card:
+               https://getbootstrap.com/docs/5.3/components/card/
+               Bootstrap border and shadow utilities:
+               https://getbootstrap.com/docs/5.3/utilities/borders/
+               https://getbootstrap.com/docs/5.3/utilities/shadows/
+          -->
+          <div class="card stat-card border-0 shadow-sm rounded-3 border-start border-primary border-4">
+            <div class="card-body d-flex align-items-center justify-content-between p-3">
+              <div>
+                <p class="text-uppercase text-muted fw-bold small mb-1">Total Books in Catalog</p>
+                <h3 class="display-6 fw-bold text-dark mb-0" id="statTotalBooks">0</h3>
+              </div>
+              <div class="stat-icon-wrapper bg-primary bg-opacity-10 text-primary">
+                <i class="bi bi-journals fs-2"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Available Books -->
+        <div class="col-12 col-md-4">
+          <div class="card stat-card border-0 shadow-sm rounded-3 border-start border-success border-4">
+            <div class="card-body d-flex align-items-center justify-content-between p-3">
+              <div>
+                <p class="text-uppercase text-muted fw-bold small mb-1">Available for Lending</p>
+                <h3 class="display-6 fw-bold text-success mb-0" id="statAvailableBooks">0</h3>
+              </div>
+              <div class="stat-icon-wrapper bg-success bg-opacity-10 text-success">
+                <i class="bi bi-check-circle-fill fs-2"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Issued Books -->
+        <div class="col-12 col-md-4">
+          <div class="card stat-card border-0 shadow-sm rounded-3 border-start border-warning border-4">
+            <div class="card-body d-flex align-items-center justify-content-between p-3">
+              <div>
+                <p class="text-uppercase text-muted fw-bold small mb-1">Currently Issued</p>
+                <h3 class="display-6 fw-bold text-warning mb-0" id="statIssuedBooks">0</h3>
+              </div>
+              <div class="stat-icon-wrapper bg-warning bg-opacity-10 text-warning">
+                <i class="bi bi-clock-history fs-2"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Interactive Drag & Drop Lending Station -->
+    <!-- HTML Drag and Drop API:
+         https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API
+    -->
+    <section class="mb-4" aria-labelledby="dragDropHeading">
+      <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+        <div class="card-header bg-white py-3 border-bottom d-flex align-items-center">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-arrows-move text-primary fs-5"></i>
+            <h5 id="dragDropHeading" class="mb-0 fw-bold">Interactive Drag &amp; Drop Lending Hub</h5>
+          </div>
+        </div>
+
+        <div class="card-body p-3 bg-body-tertiary">
+          <div class="row g-3">
+
+            <!-- Drop Zone: Available -->
+            <!-- tabindex and ARIA region:
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex
+                 https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/region_role
+            -->
+            <div class="col-12 col-md-6">
+              <div class="drop-zone drop-zone-available text-center p-4 rounded-3 d-flex flex-column align-items-center justify-content-center"
+                   id="dropZoneAvailable"
+                   data-target-status="Available"
+                   tabindex="0"
+                   role="region"
+                   aria-label="Drop zone to return books as Available">
+                <div class="drop-zone-icon-circle bg-success text-white mb-2 shadow-sm">
+                  <i class="bi bi-box-arrow-in-down fs-3"></i>
+                </div>
+                <h6 class="fw-bold text-success mb-1">Return Desk &bull; Mark "Available"</h6>
+                <p class="text-muted small mb-0">Drop book cards here to return them back into circulation</p>
+              </div>
+            </div>
+
+            <!-- Drop Zone: Issued -->
+            <div class="col-12 col-md-6">
+              <div class="drop-zone drop-zone-issued text-center p-4 rounded-3 d-flex flex-column align-items-center justify-content-center"
+                   id="dropZoneIssued"
+                   data-target-status="Issued"
+                   tabindex="0"
+                   role="region"
+                   aria-label="Drop zone to lend books as Issued">
+                <div class="drop-zone-icon-circle bg-warning text-dark mb-2 shadow-sm">
+                  <i class="bi bi-box-arrow-up-right fs-3"></i>
+                </div>
+                <h6 class="fw-bold text-dark mb-1">Lending Desk &bull; Mark "Issued"</h6>
+                <p class="text-muted small mb-0">Drop book cards here to issue them to a student/borrower</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Catalogue & Filter Controls -->
+    <section class="catalogue-section" aria-labelledby="catalogueHeading">
+      <div class="card border-0 shadow-sm rounded-3">
+
+        <!-- Filter and Search Header -->
+        <div class="card-header bg-white py-3 border-bottom">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-grid-3x3-gap-fill text-primary fs-5"></i>
+              <h5 id="catalogueHeading" class="mb-0 fw-bold">Book Catalogue</h5>
+
+              <!-- Bootstrap Badge:
+                   https://getbootstrap.com/docs/5.3/components/badge/
+              -->
+              <span id="resultsCountBadge" class="badge bg-primary-subtle text-primary ms-2 rounded-pill">0 items</span>
+            </div>
+
+            <!-- Reset button:
+                 https://getbootstrap.com/docs/5.3/components/buttons/
+            -->
+            <button type="button" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" id="btnResetFilters">
+              <i class="bi bi-arrow-counterclockwise"></i> Reset Filters
+            </button>
+          </div>
+
+          <!-- Filter Toolbar Controls -->
+          <!-- Bootstrap grid reference:
+               https://getbootstrap.com/docs/5.3/layout/grid/
+          -->
+          <div class="row g-2 align-items-center">
+
+            <!-- Search Input -->
+            <!-- HTML input reference:
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
+                 Bootstrap Input Groups:
+                 https://getbootstrap.com/docs/5.3/forms/input-group/
+            -->
+            <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control border-start-0" id="searchInput" autocomplete="off">
+                <button class="btn btn-outline-secondary d-none" type="button" id="btnClearSearch" title="Clear search">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Category Filter -->
+            <!-- HTML select and option:
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option
+            -->
+            <div class="col-6 col-md-3 col-lg-2">
+              <select class="form-select" id="categoryFilter" aria-label="Filter by Category">
+                <option value="All" selected>All Categories</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Science">Science</option>
+                <option value="Technology">Technology</option>
+                <option value="History">History</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Status Filter -->
+            <div class="col-6 col-md-3 col-lg-2">
+              <select class="form-select" id="statusFilter" aria-label="Filter by Status">
+                <option value="All" selected>All Statuses</option>
+                <option value="Available">Available</option>
+                <option value="Issued">Issued</option>
+              </select>
+            </div>
+
+            <!-- Sort By -->
+            <div class="col-12 col-md-2 col-lg-2 ms-auto">
+              <select class="form-select" id="sortBySelect" aria-label="Sort books">
+                <option value="title_asc">Title (A → Z)</option>
+                <option value="title_desc">Title (Z → A)</option>
+                <option value="publication_year_desc">Year (Newest)</option>
+                <option value="publication_year_asc">Year (Oldest)</option>
+                <option value="book_id_desc" selected>Recently Added</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Catalogue Cards Container -->
+        <!-- Bootstrap Card Body:
+             https://getbootstrap.com/docs/5.3/components/card/#body
+        -->
+        <div class="card-body p-4">
+
+          <!-- Loading Spinner -->
+          <!-- Bootstrap Spinners:
+               https://getbootstrap.com/docs/5.3/components/spinners/
+          -->
+          <div id="loadingIndicator" class="text-center py-5 d-none">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading books...</span>
+            </div>
+            <p class="text-muted mt-2 small">Synchronizing catalogue with database...</p>
+          </div>
+
+          <!-- Empty State -->
+          <div id="emptyState" class="text-center py-5 d-none">
+            <i class="bi bi-inbox text-muted display-4 d-block mb-3"></i>
+            <h5 class="fw-bold text-secondary">No books found</h5>
+            <p class="text-muted small mb-3">Try adjusting your search criteria or register a new book to the database.</p>
+            <button type="button" class="btn btn-sm btn-primary" id="btnEmptyAddBook">
+              <i class="bi bi-plus-lg me-1"></i> Register New Book
+            </button>
+          </div>
+
+          <!-- Books Grid -->
+          <!-- Bootstrap responsive grid:
+               https://getbootstrap.com/docs/5.3/layout/grid/#row-columns
+          -->
+          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3" id="booksGrid">
+            <!-- Dynamically populated book cards by app.js -->
+          </div>
+        </div>
+
+        <!-- Pagination Footer -->
+        <!-- Bootstrap Pagination:
+             https://getbootstrap.com/docs/5.3/components/pagination/
+        -->
+        <div class="card-footer bg-white border-top py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+          <div class="text-muted small" id="paginationSummary">
+            Showing 0 of 0 books
+          </div>
+          <nav aria-label="Book Catalogue Pagination">
+            <ul class="pagination pagination-sm mb-0 justify-content-center" id="paginationControls">
+              <!-- Dynamically populated pagination items by app.js -->
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- UNIFIED ADD / EDIT BOOK MODAL                            -->
+  <!-- ======================================================== -->
+  <!-- Bootstrap Modal:
+       https://getbootstrap.com/docs/5.3/components/modal/
+       HTML forms:
+       https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form
+  -->
+  <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalTitle" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+
+        <!-- novalidate lets app.js manage validation feedback -->
+        <form id="bookForm" novalidate>
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title fw-bold" id="bookModalTitle">
+              <i class="bi bi-plus-circle me-1"></i> Add New Book
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body p-4">
+
+            <!-- Hidden input reference:
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/hidden
+            -->
+            <!-- Hidden Book ID for Edit Mode -->
+            <input type="hidden" id="formBookId" name="book_id" value="">
+
+            <!-- Title -->
+            <!-- Required and maxlength validation:
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength
+            -->
+            <div class="mb-3">
+              <label for="formTitle" class="form-label fw-semibold">Book Title <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="formTitle" name="title" required maxlength="150">
+              <div class="invalid-feedback">Please provide a valid book title (max 150 characters).</div>
+            </div>
+
+            <!-- Author -->
+            <div class="mb-3">
+              <label for="formAuthor" class="form-label fw-semibold">Author Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="formAuthor" name="author" required maxlength="100">
+              <div class="invalid-feedback">Please provide the author's name (max 100 characters).</div>
+            </div>
+
+            <!-- Book Code (ISBN/Code) -->
+            <!-- Pattern validation:
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+            -->
+            <div class="mb-3">
+              <label for="formBookCode" class="form-label fw-semibold">Book Code / ISBN <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="formBookCode" name="book_code" required pattern="^[A-Za-z0-9-]+$" maxlength="30">
+              <div class="invalid-feedback">Unique code required (alphanumeric and hyphens only, max 30).</div>
+            </div>
+
+            <div class="row g-3 mb-3">
+
+              <!-- Category -->
+              <div class="col-12 col-sm-6">
+                <label for="formCategory" class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
+                <select class="form-select" id="formCategory" name="category" required>
+                  <option value="" disabled selected>Select category...</option>
+                  <option value="Fiction">Fiction</option>
+                  <option value="Science">Science</option>
+                  <option value="Technology">Technology</option>
+                  <option value="History">History</option>
+                  <option value="Other">Other</option>
+                </select>
+                <div class="invalid-feedback">Please select a valid category.</div>
+              </div>
+
+              <!-- Publication Year -->
+              <!-- Number input and min/max:
+                   https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number
+            -->
+              <div class="col-12 col-sm-6">
+                <label for="formYear" class="form-label fw-semibold">Publication Year</label>
+                <input type="number" class="form-control" id="formYear" name="publication_year" min="1000" max="2099">
+                <div class="invalid-feedback">Year must be between 1000 and 2099.</div>
+              </div>
+            </div>
+
+            <!-- Cover Image URL -->
+            <!-- URL input reference:
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url
+            -->
+            <div class="mb-3">
+              <label for="formImageUrl" class="form-label fw-semibold">Cover Image URL <span class="text-muted fw-normal small">(Optional)</span></label>
+              <input type="url" class="form-control" id="formImageUrl" name="image_url">
+            </div>
+
+            <!-- Status -->
+            <!-- Radio input reference:
+                 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio
+            -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold d-block">Status <span class="text-danger">*</span></label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="status" id="statusAvailableRadio" value="Available" checked>
+                <label class="form-check-label text-success fw-semibold" for="statusAvailableRadio">
+                  <i class="bi bi-check-circle me-1"></i> Available
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="status" id="statusIssuedRadio" value="Issued">
+                <label class="form-check-label text-warning-emphasis fw-semibold" for="statusIssuedRadio">
+                  <i class="bi bi-clock-history me-1"></i> Issued
+                </label>
+              </div>
+            </div>
+
+            <!-- Server Error Alert -->
+            <!-- Bootstrap Alerts:
+                 https://getbootstrap.com/docs/5.3/components/alerts/
+            -->
+            <div class="alert alert-danger d-none py-2 px-3 small" id="formErrorAlert" role="alert"></div>
+          </div>
+
+          <!-- Modal footer and action buttons -->
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary d-flex align-items-center gap-1" id="btnSubmitForm">
+              <i class="bi bi-check2"></i> <span id="btnSubmitLabel">Save Book</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- DELETE CONFIRMATION MODAL                                -->
+  <!-- ======================================================== -->
+  <!-- Bootstrap Modal:
+       https://getbootstrap.com/docs/5.3/components/modal/
+  -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header bg-danger text-white py-2">
+          <h6 class="modal-title fw-bold" id="deleteModalTitle">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i> Confirm Deletion
+          </h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-3">
+          <p class="mb-1 text-muted small">Are you sure you want to permanently remove this book from the database?</p>
+          <p class="fw-bold text-dark mb-0 text-truncate" id="deleteBookTitle"></p>
+        </div>
+        <div class="modal-footer bg-light py-2">
+          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-sm btn-danger d-flex align-items-center gap-1" id="btnConfirmDelete">
+            <i class="bi bi-trash-fill"></i> Delete Book
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- TOAST NOTIFICATIONS CONTAINER                            -->
+  <!-- ======================================================== -->
+  <!-- Bootstrap Toast:
+       https://getbootstrap.com/docs/5.3/components/toasts/
+       Fixed positioning:
+       https://getbootstrap.com/docs/5.3/utilities/position/
+  -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    <div id="liveToast" class="toast align-items-center text-white border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body d-flex align-items-center gap-2" id="toastMessage">
+          <!-- Dynamic message inserted by app.js -->
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- FOOTER                                                   -->
+  <!-- ======================================================== -->
+  <!-- Semantic footer:
+       https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer
+  -->
+  <footer class="py-3 mt-auto border-top text-center text-muted small">
+    <div class="container-fluid">
+      &copy; Library Book Lending Management System
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 Bundle JS
+       Includes the JavaScript needed for Bootstrap Modals and Toasts.
+       https://getbootstrap.com/docs/5.3/getting-started/introduction/
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Main Application Vanilla JS
+       Fetch API, event listeners, form handling, catalogue rendering,
+       pagination, and native drag-and-drop are implemented here.
+  -->
+  <script src="app.js"></script>
+</body>
+</html>

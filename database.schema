@@ -1,0 +1,51 @@
+-- =====================================================================
+-- Library Book Lending Management System
+-- Database Schema: library_portal
+-- Table: books
+--
+-- Target Environment: XAMPP (Apache + MySQL / MariaDB) & phpMyAdmin
+-- Default Credentials:
+--   Host     : localhost (127.0.0.1)
+--   Port     : 3306
+--   User     : root
+--   Password : (blank / empty by default in XAMPP)
+--   Database : library_portal
+-- =====================================================================
+
+-- 1. Create Database if it does not already exist
+CREATE DATABASE IF NOT EXISTS `library_portal`
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE `library_portal`;
+
+-- 2. Create Table `books` matching phpMyAdmin structure
+CREATE TABLE IF NOT EXISTS `books` (
+  `book_id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `author` VARCHAR(150) NOT NULL,
+  `book_code` VARCHAR(50) NOT NULL UNIQUE,
+  `category` VARCHAR(50) NOT NULL,
+  `publication_year` INT NULL,
+  `status` VARCHAR(20) NOT NULL DEFAULT 'Available',
+  `image_url` VARCHAR(255) NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`book_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 3. Populate Seed Data (Matches exact records from phpMyAdmin)
+INSERT INTO `books` (`book_id`, `title`, `author`, `book_code`, `category`, `publication_year`, `status`, `image_url`) VALUES
+(1, 'Clean Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', 'TECH-101', 'Technology', 2008, 'Issued', 'https://www.oreilly.com/library/cover/9780136083238/1200w630h/'),
+(4, 'Computer Networks: A Systems Approach', 'Larry L. Peterson', 'TECH-104', 'Technology', 2011, 'Issued', 'https://www.goonebook.in/wp-content/uploads/2021/09/Computer-Networks.jpg'),
+(5, 'To Kill a Mockingbird', 'Harper Lee', 'FIC-201', 'Fiction', 1960, 'Available', 'https://images.isbndb.com/covers/30/23/9780061120084.jpg'),
+(6, '1984', 'George Orwell', 'FIC-202', 'Fiction', 1949, 'Available', 'https://images.isbndb.com/covers/37/08/9780451524935.jpg'),
+(9, 'Cosmos', 'Carl Sagan', 'SCI-302', 'Science', 1980, 'Available', 'https://images.isbndb.com/covers/71/61/9780345539436.jpg'),
+(11, 'Sapiens: A Brief History of Humankind', 'Yuval Noah Harari', 'HIST-401', 'History', 2014, 'Issued', 'https://images.isbndb.com/covers/16/91/9780062316096.jpg')
+ON DUPLICATE KEY UPDATE
+  `title` = VALUES(`title`),
+  `author` = VALUES(`author`),
+  `book_code` = VALUES(`book_code`),
+  `category` = VALUES(`category`),
+  `publication_year` = VALUES(`publication_year`),
+  `status` = VALUES(`status`),
+  `image_url` = VALUES(`image_url`);
