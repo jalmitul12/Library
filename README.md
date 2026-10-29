@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Library Book Lending Management System
 
 A complete, production-ready, responsive **Library Book Lending Management System** engineered specifically for college practical examinations.
@@ -185,3 +186,6 @@ All requests and responses use JSON formatting with standard HTTP status codes.
 
 ### Q10: Why is debouncing applied to the search input field?
 **Answer:** Debouncing delays the execution of the API call until the user stops typing for a specified interval (300ms). This prevents firing an HTTP request and database query on every individual keystroke, conserving server and database resources.
+=======
+# Library
+>>>>>>> ad7a945c958e1b26ea454d9d061d5041f7e64ce3
